@@ -4,6 +4,8 @@ import { Columns } from "components/Columns";
 import { Cover } from "components/Cover";
 import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
+import { PropertySearch } from "components/PropertySearch";
+//import { PostTitle } from "components/PostTitle";
 import Image from "next/image";
 import { theme } from "theme";
 
@@ -20,19 +22,20 @@ export const BlockRenderer = ({ blocks }) => {
           />
         );
       }
-        case "core/paragraph": {
-            return (
-            <Paragraph
+      case "core/paragraph": {
+        return (
+          <Paragraph
             key={block.id}
             content={block.attributes.content}
             textAlign={block.attributes.align}
             textColor={
-                theme[block.attributes.textColor] ||
-                block.attributes.style?.color?.text
+              theme[block.attributes.textColor] ||
+              block.attributes.style?.color?.text
             }
-            />
-            );
-        }
+          />
+        );
+      }
+      case "core/post-title":
       case "core/heading": {
         return (
           <Heading
@@ -42,6 +45,9 @@ export const BlockRenderer = ({ blocks }) => {
             textAlign={block.attributes.textAlign}
           />
         );
+      }
+      case "acf/propertysearch": {
+        return <PropertySearch key={block.id} />;
       }
       case "core/cover": {
         console.log("block", block);
@@ -104,7 +110,7 @@ export const BlockRenderer = ({ blocks }) => {
         );
       }
       default: {
-        console.log("UNKOWN BLOCK: ", block)
+        console.log("UNKOWN BLOCK: ", block);
         return null;
       }
     }
