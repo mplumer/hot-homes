@@ -22,10 +22,11 @@ export const getStaticProps = async () => {
   }
 }
 `
-  })
+  });
+  const blocks = cleanAndTransformBlocks(data.nodeByUri.blocks)
   return {
     props: {
-      blocks: cleanAndTransformBlocks(data.nodeByUri.blocks),
+      blocks,
     },
   }
-}
+};
