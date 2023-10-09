@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 import client from "client";
 import { BlockRenderer } from "components/BlockRenderer";
+import { MainMenu } from "components/MainMenu";
 import { cleanAndTransformBlocks } from "utils/cleanAndTransformBlocks";
 import { mapMainMenuItems } from "utils/mapMainMenuItems";
 
 export default function Home(props) {
   console.log("PROPS", props)
   return <div>
+    <MainMenu items={props.mainMenuItems} callToActionLabel={props.callToActionLabel} callToActionDestination={props.callToActionDestination} />
     <BlockRenderer blocks={props.blocks} />
   </div>;
 }
@@ -23,6 +25,14 @@ export const getStaticProps = async () => {
   }
   acfOptionsMainMenu {
     mainMenu {
+      callToActionButton {
+        label
+        destination {
+          ... on Page {
+            uri
+          }
+        }
+      }
       menuItems {
         menuItems {
           destination {
@@ -50,6 +60,8 @@ export const getStaticProps = async () => {
   return {
     props: {
       mainMenuItems: mapMainMenuItems(data.acfOptionsMainMenu.mainMenu.menuItems),
+      callToActionLabel: data.acfOptionsMainMenu.mainMenu.callToActionButton.label,
+      callToActionDestination: data.acfOptionsMainMenu.mainMenu.callToActionButton.destination.uri,
       blocks,
     },
   }
