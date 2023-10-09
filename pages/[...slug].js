@@ -4,7 +4,6 @@ import {cleanAndTransformBlocks} from 'utils/cleanAndTransformBlocks'
 import { BlockRenderer } from 'components/BlockRenderer'
 
 export default function Page(props) {
-    console.log("PROPS", props)
     return <div><BlockRenderer blocks={props.blocks} /></div>
 }
 
