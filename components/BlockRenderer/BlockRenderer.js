@@ -8,7 +8,7 @@ import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { PropertyFeatures } from "components/PropertyFeatures";
 import { PropertySearch } from "components/PropertySearch";
-//import { PostTitle } from "components/PostTitle";
+import { TickItem } from "components/TickItem";
 import Image from "next/image";
 import { theme } from "theme";
 
@@ -25,6 +25,13 @@ export const BlockRenderer = ({ blocks }) => {
             hasParking={block.attributes.has_parking}
             petFriendly={block.attributes.pet_friendly}
           />
+        );
+      }
+      case "acf/tickitem": {
+        return (
+          <TickItem key={block.id}>
+            <BlockRenderer blocks={block.innerBlocks} />
+          </TickItem>
         );
       }
       case "core/gallery": {
@@ -59,8 +66,8 @@ export const BlockRenderer = ({ blocks }) => {
         return (
           <Paragraph
             key={block.id}
-            content={block.attributes.content}
             textAlign={block.attributes.align}
+            content={block.attributes.content}
             textColor={
               theme[block.attributes.textColor] ||
               block.attributes.style?.color?.text
@@ -83,15 +90,16 @@ export const BlockRenderer = ({ blocks }) => {
         return <PropertySearch key={block.id} />;
       }
       case "core/cover": {
-        console.log("block", block);
         return (
-          <Cover key={block.id} background={block.attributes.url}>
+          <Cover
+            key={block.id}
+            background={block.attributes.url.replace("https:", "http:")}
+          >
             <BlockRenderer blocks={block.innerBlocks} />
           </Cover>
         );
       }
       case "core/columns": {
-        console.log("COLUMNS: ", block.attributes);
         return (
           <Columns
             key={block.id}
@@ -135,15 +143,15 @@ export const BlockRenderer = ({ blocks }) => {
         return (
           <Image
             key={block.id}
-            src={block.attributes.url}
+            src={block.attributes.url.replace("https:", "http:")}
             height={block.attributes.height}
             width={block.attributes.width}
             alt={block.attributes.alt || ""}
+            priority="low"
           />
         );
       }
       default: {
-        console.log("UNKOWN BLOCK: ", block);
         return null;
       }
     }
