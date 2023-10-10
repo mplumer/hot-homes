@@ -88,7 +88,7 @@ export const getPageStaticProps = async (context) => {
     props: {
       seo: data.nodeByUri.seo,
       title: data.nodeByUri.title,
-      propertyFeatures: data.nodeByUri.propertyFeatures,
+      propertyFeatures: data.nodeByUri.propertyFeatures || null,
       featuredImage: data.nodeByUri.featuredImage?.node?.sourceUrl || null,
       mainMenuItems: mapMainMenuItems(
         data.acfOptionsMainMenu.mainMenu.menuItems

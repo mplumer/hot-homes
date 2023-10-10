@@ -3,6 +3,7 @@ import { Column } from "components/Column";
 import { Columns } from "components/Columns";
 import { Cover } from "components/Cover";
 import { FormspreeForm } from "components/FormspreeForm";
+import { Gallery } from "components/Gallery";
 import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { PropertyFeatures } from "components/PropertyFeatures";
@@ -23,6 +24,16 @@ export const BlockRenderer = ({ blocks }) => {
             bedrooms={block.attributes.bedrooms}
             hasParking={block.attributes.has_parking}
             petFriendly={block.attributes.pet_friendly}
+          />
+        );
+      }
+      case "core/gallery": {
+        return (
+          <Gallery
+            key={block.id}
+            columns={block.attributes.columns || 3}
+            cropImages={block.attributes.imageCrop}
+            items={block.innerBlocks}
           />
         );
       }
